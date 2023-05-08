@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './LoginAndRegistration.scss';
 
 function LoginAndRegistrationPage({ authenticate, error }) {
