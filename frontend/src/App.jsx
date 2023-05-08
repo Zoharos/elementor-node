@@ -1,10 +1,16 @@
-import LoginAndRegistration from "@/Components/Pages/LoginAndRegistration";
+import './App.scss'
+import LoginAndRegistration from "@/Components/Pages/LoginAndRegistration/LoginAndRegistration.jsx";
 
 function App() {
 
+  function authenticate(email, password) {
+    console.log(email);
+    console.log(password);
+  }
+
   return (
     <>
-      <LoginAndRegistration />
+      <LoginAndRegistration authenticate={authenticate} />
     </>
   )
 }
