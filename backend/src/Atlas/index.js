@@ -21,3 +21,4 @@ run().catch(console.dir);
 const db = client.db(process.env.ATLAS_DB_NAME).collection(process.env.ATLAS_DB_COLLECTION);
 
 module.exports = db;
+module.exports.closeConnection = () => client.close();
