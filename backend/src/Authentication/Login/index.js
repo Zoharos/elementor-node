@@ -17,6 +17,7 @@ router.post('/login', async (req, res) => {
       }
     }];
     const { value } = await db.findOneAndUpdate(query, update, { returnOriginal: false });
+    console.log(value);
     value ? res.send(value) : (() => { throw Error("User not found") })();
     const { modifiedCount } = await db.updateOne(query, { $inc: { login_count: 1 } });
     !modifiedCount && (() => { throw Error("User login count did not update")} )();
