@@ -1,5 +1,5 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = `mongodb+srv://${process.env.atlasDBUsername}:${process.env.atlasDBPassword}@${process.env.atlasDBHost}/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.ATLAS_DB_USERNAME}:${process.env.ATLAS_DB_PASSWORD}@${process.env.ATLAS_DB_HOST}/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -18,6 +18,6 @@ async function run() {
   }
 }
 run().catch(console.dir);
-const db = client.db(process.env.atlasDBName).collection(process.env.atlasDBCollection);
+const db = client.db(process.env.ATLAS_DB_NAME).collection(process.env.ATLAS_DB_COLLECTION);
 
 module.exports = db;

@@ -6,8 +6,14 @@ import './App.scss'
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
 
-  function authenticate(email, password) {
-    setAuthenticated(true);
+  async function authenticate(email, password) {
+    const login = await fetch(`${import.meta.env.VITE_BACKEND_ENDPOINT}/authentication/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    })
+    .then(() => setAuthenticated(true))
+    .catch(error => console.error(error));
   }
 
   function logout() {
