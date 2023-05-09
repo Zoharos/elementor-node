@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoginAndRegistration from "@/Components/Pages/LoginAndRegistration/LoginAndRegistration.jsx";
 import ActiveUsers from "@/Components/Pages/ActiveUsers/ActiveUsers.jsx";
 import './App.scss'
@@ -6,6 +6,13 @@ import './App.scss'
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [activeUsers, setActiveUsers] = useState([]);
+
+  useEffect(() => {
+    if(authenticated) {
+      getActiveUsers();
+    }
+  }, [authenticated])
 
   async function authenticate(email, password) {
     try {
@@ -29,7 +36,7 @@ function App() {
 
   async function logout() {
     try {
-      const { status, statusText } = await fetch(`${import.meta.env.VITE_BACKEND_ENDPOINT}/authentication/logout`, {
+      await fetch(`${import.meta.env.VITE_BACKEND_ENDPOINT}/authentication/logout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: userEmail })
@@ -57,11 +64,29 @@ function App() {
       console.log(e);
     }
   }
+
+  async function getActiveUsers() {
+    try {
+      const ans = await fetch(`${import.meta.env.VITE_BACKEND_ENDPOINT}/users/active`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      const data = await ans.json()
+      if(data) {
+        console.log(data);
+        setActiveUsers(data)
+      }
+      else
+        throw Error("Something went wrong");
+    } catch(e) {
+      console.log(e);
+    }
+  }
   
   return (
     <>
       {!authenticated && <LoginAndRegistration authenticate={authenticate} />}
-      {authenticated && <ActiveUsers logout={logout} userEmail={userEmail} />}
+      {authenticated && <ActiveUsers logout={logout} userEmail={userEmail} activeUsers={activeUsers} />}
     </>
   )
 }

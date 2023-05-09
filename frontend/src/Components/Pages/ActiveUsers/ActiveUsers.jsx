@@ -1,31 +1,7 @@
 import React, { useState } from 'react';
 import './ActiveUsers.scss';
 
-function ActiveUsersPage({ logout }) {
-  const [activeUsers, setActiveUsers] = useState([
-    {
-      id: 1,
-      username: 'Alice',
-      loginTime: '0 minutes ago',
-      lastUpdated: '1 minutes ago',
-      prevLoginTime: '2 minutes ago',
-      ip: '192.168.1.101',
-      userAgent: 'chrome',
-      registrationTime: '10 minutes ago',
-      loginsCount: '100'
-    },
-    {
-      id: 2,
-      username: 'Bob',
-      loginTime: '0 minutes ago',
-      lastUpdated: '1 minutes ago',
-      prevLoginTime: '2 minutes ago',
-      ip: '192.168.1.102',
-      userAgent: 'opera',
-      registrationTime: '20 minutes ago',
-      loginsCount: '200'
-    },
-  ]);
+function ActiveUsersPage({ logout, activeUsers }) {
   const [selectedUser, setSelectedUser] = useState(null);
 
   const handleUserClick = (user) => {
@@ -38,21 +14,21 @@ function ActiveUsersPage({ logout }) {
       <div className="user-list">
         {activeUsers.map((user) => (
           <div
-            key={user.id}
+            key={user._id}
             className={`user-item ${
-              selectedUser && selectedUser.id === user.id ? 'selected' : ''
+              selectedUser && selectedUser._id === user._id ? 'selected' : ''
             }`}
             onClick={() => handleUserClick(user)}
           >
-            <div className="user-name">{user.username}</div>
+            <div className="user-name">{user.email}</div>
             <div className="user-activity">
-              {user.loginTime}
+              login time: {user.login_time}
             </div>
             <div className="user-activity">
-              {user.lastUpdated}
+              last update: {user.last_update_time}
             </div>
-            <div className="user-last-active">{user.prevLoginTime}</div>
-            <div className="user-ip">{user.ip}</div>
+            <div className="user-last-active">last login: {user.last_login}</div>
+            <div className="user-ip">ip: {user.ip}</div>
           </div>
         ))}
       </div>
@@ -61,23 +37,19 @@ function ActiveUsersPage({ logout }) {
           <h2>User Details</h2>
           <div className="user-detail-row">
             <div className="user-detail-label">Name:</div>
-            <div className="user-detail-value">{selectedUser.username}</div>
+            <div className="user-detail-value">{selectedUser.email}</div>
           </div>
           <div className="user-detail-row">
-            <div className="user-detail-label">City:</div>
-            <div className="user-detail-value">{selectedUser.loginTime}</div>
+            <div className="user-detail-label">User Agent:</div>
+            <div className="user-detail-value">{selectedUser.user_agent}</div>
           </div>
           <div className="user-detail-row">
-            <div className="user-detail-label">Country:</div>
-            <div className="user-detail-value">{selectedUser.lastUpdated}</div>
+            <div className="user-detail-label">Login Count:</div>
+            <div className="user-detail-value">{selectedUser.login_count}</div>
           </div>
           <div className="user-detail-row">
-            <div className="user-detail-label">Last Active:</div>
-            <div className="user-detail-value">{selectedUser.prevLoginTime}</div>
-          </div>
-          <div className="user-detail-row">
-            <div className="user-detail-label">IP:</div>
-            <div className="user-detail-value">{selectedUser.ip}</div>
+            <div className="user-detail-label">Register Time:</div>
+            <div className="user-detail-value">{selectedUser.register_time}</div>
           </div>
         </div>
       )}

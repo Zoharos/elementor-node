@@ -6,7 +6,7 @@ router.get('/me', async (req, res) => {
   try {
     const { email } = req.body;
     const query = { email };
-    const ans = await db.findOne(query);
+    const ans = await db.findOne(query, { projection: { password: 0 } });
     ans ? res.send({...ans, password: "***"}) : (() => { throw Error("User not found") })();
   } catch(e) {
     console.log(e);
