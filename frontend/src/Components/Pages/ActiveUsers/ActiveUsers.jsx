@@ -32,10 +32,6 @@ function ActiveUsersPage({ logout }) {
     setSelectedUser(user);
   };
 
-  const handleLogoutClick = () => {
-    // TODO: Handle logout logic
-  };
-
   return (
     <div className="active-users-page">
       <h1>Welcome to the DASHBOARD</h1>

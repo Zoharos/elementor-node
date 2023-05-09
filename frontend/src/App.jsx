@@ -5,6 +5,7 @@ import './App.scss'
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
 
   async function authenticate(email, password) {
     try {
@@ -17,8 +18,23 @@ function App() {
         register(email, password);
       else if(status > 299)
         throw Error(statusText);
-      else
+      else {
         setAuthenticated(true);
+        setUserEmail(email);
+      }
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+  async function logout() {
+    try {
+      const { status, statusText } = await fetch(`${import.meta.env.VITE_BACKEND_ENDPOINT}/authentication/logout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: userEmail })
+      })
+      setAuthenticated(false);
     } catch(e) {
       console.log(e);
     }
@@ -31,23 +47,21 @@ function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
       })
-      if(status < 300)
+      if(status < 300) {
         setAuthenticated(true);
+        setUserEmail(email);
+      }
       else
         throw Error(statusText);
     } catch(e) {
       console.log(e);
     }
   }
-
-  function logout() {
-    setAuthenticated(false);
-  }
-
+  
   return (
     <>
       {!authenticated && <LoginAndRegistration authenticate={authenticate} />}
-      {authenticated && <ActiveUsers logout={logout} />}
+      {authenticated && <ActiveUsers logout={logout} userEmail={userEmail} />}
     </>
   )
 }
