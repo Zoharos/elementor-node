@@ -1,6 +1,7 @@
 require('dotenv').config();
 const request = require('supertest');
 const app = require('../src');
+const { server } = require('../src');
 
 describe('POST /authentication/login', () => {
   test('login as asd user', async () => {
@@ -14,3 +15,6 @@ describe('POST /authentication/login', () => {
   });
 });
 
+afterAll((done) => {
+  server.close(done);
+});

@@ -16,12 +16,10 @@ app.get('/', async (req, res) => {
 });
 app.use('/api', router);
 
-app.listen(3000, () => {
+const server = app.listen(3000, () => {
   console.log('Server listening on port 3000');
 });
 
-process.on('exit', async () => {
-  await closeConnection();
-})
 
-module.exports = app
+module.exports = app;
+module.exports.server = server;
