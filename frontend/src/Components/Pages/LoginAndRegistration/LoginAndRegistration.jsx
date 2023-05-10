@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './LoginAndRegistration.scss';
 
 function LoginAndRegistrationPage({ authenticate, error }) {
@@ -6,7 +6,7 @@ function LoginAndRegistrationPage({ authenticate, error }) {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [errorMessage, setErrorMessage] = useState(error);
-
+  
   function handleSubmit(event) {
     if(email && password)
       authenticate(email, password);
@@ -26,7 +26,7 @@ function LoginAndRegistrationPage({ authenticate, error }) {
           <label htmlFor="password">Password:</label>
           <input type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)} />
         </div>
-        <button type="button" onClick={handleSubmit} >Login</button>
+        <button type="button" name='login' onClick={handleSubmit} >Login</button>
       </form>
       {errorMessage && (
           <div className="error-message">{errorMessage}</div>

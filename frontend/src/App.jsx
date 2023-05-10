@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import LoginAndRegistration from "@/Components/Pages/LoginAndRegistration/LoginAndRegistration.jsx";
 import ActiveUsers from "@/Components/Pages/ActiveUsers/ActiveUsers.jsx";
 import './App.scss'
